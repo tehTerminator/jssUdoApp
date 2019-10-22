@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Add Phone
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ listing.title }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Address : {{ listing.address }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Phone Number</ion-label>
+      <ion-input type="phone" [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="addPhone()">Add Phone Number</ion-button>
+
+  <ion-list [hidden]="savedPhones.length === 0">
+    <ion-list-header>Saved Phones</ion-list-header>
+    <ion-item *ngFor="let contact of savedPhones">
+      <ion-label>
+        {{ contact }}
+      </ion-label>
+      <ion-icon (click)="delete(contact)" name="trash"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

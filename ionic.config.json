@@ -1,5 +1,7 @@
 {
   "name": "dirApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

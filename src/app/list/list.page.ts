@@ -1,39 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../interface/category';
+import { MySQLService } from '../service/my-sql.service';
+import { CategoryService } from '../service/category.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss']
 })
-export class ListPage implements OnInit {
-  private selectedItem: any;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
-  }
+export class ListPage {
+  constructor(public categories: CategoryService, private mysql: MySQLService) {  }
 
-  ngOnInit() {
+  delete(theCategory: Category): void {
+    this.mysql.delete('categories', {
+      andWhere: {
+        id: theCategory.id
+      }
+    }).subscribe(() => this.categories.retrieveFromServer());
   }
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
 }

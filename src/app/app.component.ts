@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UserServiceService } from './service/user-service.service';
 
 @Component({
   selector: 'app-root',
@@ -14,19 +15,40 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home',
+      level: 0,
     },
     {
-      title: 'List',
+      title: 'Add Category',
+      url: '/categoryForm',
+      icon: 'folder-open',
+      level: 5,
+    },
+    {
+      title: 'List Categories',
       url: '/list',
-      icon: 'list'
+      icon: 'list',
+      level: 5
+    },
+    {
+      title: 'New Listing',
+      url: '/new-listing-form',
+      icon: 'add',
+      level: 5
+    },
+    {
+      title: 'Login',
+      url: '/login',
+      icon: 'contacts',
+      level: 0
     }
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private userService: UserServiceService
   ) {
     this.initializeApp();
   }
@@ -36,5 +58,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  isAuthorised(level: number): boolean{
+    return level <= this.userService.getAuthLevel();
   }
 }

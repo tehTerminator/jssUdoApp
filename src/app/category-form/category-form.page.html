@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{ title }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item [hidden]="isLoading">
+      <ion-label position="stacked">Category Name</ion-label>
+      <ion-input type="text" [(ngModel)]="categoryName"></ion-input>
+    </ion-item>
+
+    <ion-item [hidden]="!isLoading">
+        <ion-label>
+          Please Wait...
+        </ion-label>
+        <ion-spinner></ion-spinner>
+      </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="save()" [hidden]="categoryName.length < 3 || isLoading">
+    Save
+  </ion-button>
+
+  
+
+  <ion-list [hidden]="!hasInsertedRecently()">
+    <ion-list-header>
+      Successfully Created New Category
+    </ion-list-header>
+    <ion-item>
+      Title : {{ lastInserted.title }}
+    </ion-item>
+  </ion-list>
+</ion-content>
