@@ -3,7 +3,6 @@ import { MySQLService } from '../service/my-sql.service';
 import { Listing } from '../interface/listing';
 import { CategoryService } from '../service/category.service';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +15,11 @@ export class HomePage implements OnInit {
   cities: Array<any> = [];
   city_id: string;
   isLoading = false;
+  limit = {
+    start: 0,
+    offset: 10,
+    max: -1
+  };
 
   constructor(
     private mysql: MySQLService, 
@@ -24,10 +28,7 @@ export class HomePage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.mysql.select('city',).subscribe((res: any) => {
-      console.log('cities', res);
-      this.cities = res;
-    });
+    this.mysql.select('city',).subscribe((res: any) => this.cities = res);
   }
 
   async get(){
@@ -43,20 +44,48 @@ export class HomePage implements OnInit {
       return;
     }
 
-    
     this.mysql.select('listings', {
       andWhere: {
         category_id: this.category_id,
         city_id: this.city_id
-      }
-    }).subscribe((res: any) => {
+      },
+      limit: `${this.limit.start}, ${this.limit.offset}`
+    }, true).subscribe((res: any) => {
       this.isLoading = false;
-      this.listings = res;
+      this.listings = res.rows;
     });
   }
 
   goto(id: number): void{
     this.route.navigate(['/view-listing', id])
   }
+
+  async getCount() {
+    this.isLoading = true;
+    this.mysql.select('listings', {
+      columns: ['COUNT(id) as max'],
+      andWhere: {
+        category_id: this.category_id,
+        city_id: this.city_id
+      }
+    }).subscribe((res: any) => {
+      this.isLoading = false;
+      this.limit.max = +res[0].max;
+      this.get();
+    })
+  }
+
+  next() {
+    if( this.listings.length === 0 ){
+      return;
+    }
+    this.limit.start += this.limit.offset;
+    if( this.limit.start > this.limit.max ){
+      this.limit.start = 0;
+    }
+    this.get();
+  }
+
+
 
 }

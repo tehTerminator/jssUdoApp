@@ -19,6 +19,12 @@ export class AppComponent {
       level: 0,
     },
     {
+      title: 'Search',
+      url: '/search',
+      icon: 'search',
+      level: 0
+    },
+    {
       title: 'Add Category',
       url: '/categoryForm',
       icon: 'folder-open',

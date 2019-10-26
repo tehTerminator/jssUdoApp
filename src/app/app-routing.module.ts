@@ -33,7 +33,8 @@ const routes: Routes = [
   },
   { 
     path: 'login', loadChildren: () => import ('./login/login.module').then(m=> m.LoginPageModule) 
-  }
+  },
+  { path: 'search', loadChildren: () => import('./search/search.module').then(m=>m.SearchPageModule) }
 ];
 
 @NgModule({

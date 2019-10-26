@@ -18,6 +18,7 @@ export class ViewListingPage implements OnInit {
     category_id: 1
   };
   savedPhones: Array<string> = [];
+  authLevel = 0;
 
   constructor(
     private mysql: MySQLService, 
@@ -31,6 +32,7 @@ export class ViewListingPage implements OnInit {
       this.listing.id = res['listing_id'];
       this.getListing();
     });
+    this.authLevel = this.userService.getAuthLevel();
   }
 
   editListing() {
