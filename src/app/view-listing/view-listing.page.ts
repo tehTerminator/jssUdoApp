@@ -67,4 +67,18 @@ export class ViewListingPage implements OnInit {
     });
   }
 
+  deleteListing(): void {
+    this.mysql.delete('listings', {
+      andWhere: {
+        id: this.listing.id
+      }
+    }).subscribe(() => {
+      this.router.navigate(['home'])
+    })
+  }
+
+  addPhoto(): void{
+    this.router.navigate(['home', this.listing.id]);
+  }
+
 }

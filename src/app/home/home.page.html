@@ -44,7 +44,7 @@
       </ion-label>
 
     </ion-item>
-    <ion-button expand="full" (click)="next()">
+    <ion-button expand="full" (click)="next()" [hidden]="limit.max <= limit.offset">
       More
     </ion-button>
   </ion-list>

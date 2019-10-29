@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  listings: Array<Listing>;
+  listings: Array<Listing> = [];
   category_id: string;
   cities: Array<any> = [];
   city_id: string;
@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.mysql.select('city',).subscribe((res: any) => this.cities = res);
+    this.mysql.select('city').subscribe((res: any) => this.cities = res);
   }
 
   async get(){
@@ -50,9 +50,9 @@ export class HomePage implements OnInit {
         city_id: this.city_id
       },
       limit: `${this.limit.start}, ${this.limit.offset}`
-    }, true).subscribe((res: any) => {
+    }).subscribe((res: any) => {
       this.isLoading = false;
-      this.listings = res.rows;
+      this.listings = res;
     });
   }
 
@@ -61,6 +61,16 @@ export class HomePage implements OnInit {
   }
 
   async getCount() {
+    if( this.category_id === null || this.category_id === undefined ){
+      this.isLoading = false;
+      return;
+    } 
+    if( this.city_id === null || this.city_id === undefined ){
+      this.isLoading = false;
+      return;
+    }
+
+
     this.isLoading = true;
     this.mysql.select('listings', {
       columns: ['COUNT(id) as max'],
@@ -84,6 +94,10 @@ export class HomePage implements OnInit {
       this.limit.start = 0;
     }
     this.get();
+  }
+
+  isNext() {
+
   }
 
 

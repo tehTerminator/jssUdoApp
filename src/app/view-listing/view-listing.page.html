@@ -35,10 +35,10 @@
     </ion-item>
   </ion-list>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" [hidden]="authLevel <= 1">
-    <ion-fab-button (click)="editListing()">
-      <ion-icon name="create"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-    
+  <ion-button expand="full" [hidden]="authLevel <= 1" (click)="editListing()">
+    Edit
+  </ion-button>
+  <ion-button expand="full" color="danger" [hidden]="authLevel <= 1" (click)="deleteListing()">
+    Delete
+  </ion-button>
 </ion-content>
