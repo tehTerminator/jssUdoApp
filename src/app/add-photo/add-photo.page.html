@@ -1,9 +1,24 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>AddPhoto</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Add Photo
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 <ion-content>
 
+  <ion-img [src]="imageData"></ion-img>
+
+  <ion-button color="primary" expand="full" (click)="takePicture()">
+    <ion-icon slot="start" name="camera"></ion-icon>
+    Take Picture
+  </ion-button>
+  
+  <ion-button color="secondary" expand="full" (click)="uploadPicture()">
+    <ion-icon slot="start" name="cloud-upload"></ion-icon>
+    Upload Picture
+  </ion-button>
 </ion-content>

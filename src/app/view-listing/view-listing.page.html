@@ -38,6 +38,7 @@
   <ion-button expand="full" [hidden]="authLevel <= 1" (click)="editListing()">
     Edit
   </ion-button>
+  <ion-button expand="full" href="/add-photo/{{ listing.id }}">Add Photo</ion-button>
   <ion-button expand="full" color="danger" [hidden]="authLevel <= 1" (click)="deleteListing()">
     Delete
   </ion-button>
