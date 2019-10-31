@@ -19,6 +19,8 @@ export class ViewListingPage implements OnInit {
   };
   savedPhones: Array<string> = [];
   authLevel = 0;
+  url = '';
+  isImage = true;
 
   constructor(
     private mysql: MySQLService, 
@@ -33,6 +35,7 @@ export class ViewListingPage implements OnInit {
       this.getListing();
     });
     this.authLevel = this.userService.getAuthLevel();
+    this.url = `http://maharajac.in/app/jss_images/${this.listing.id}.jpg`;
   }
 
   editListing() {
@@ -79,6 +82,10 @@ export class ViewListingPage implements OnInit {
 
   addPhoto(): void{
     this.router.navigate(['home', this.listing.id]);
+  }
+
+  handleNoImage(){
+    this.isImage = false;
   }
 
 }

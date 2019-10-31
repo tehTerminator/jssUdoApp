@@ -10,15 +10,23 @@
   </ion-header>
 <ion-content>
 
-  <ion-img [src]="imageData"></ion-img>
+  <div [hidden]="loading">
+    <ion-img [src]="imageData" (error)="loadDefault()"></ion-img>
+    <ion-button color="primary" expand="full" (click)="takePicture()">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Take Picture
+    </ion-button>
+    
+    <ion-button [hidden]="!imageExist" color="secondary" expand="full" (click)="uploadPicture()">
+      <ion-icon slot="start" name="cloud-upload"></ion-icon>
+      Upload Picture
+    </ion-button>
+  </div>
 
-  <ion-button color="primary" expand="full" (click)="takePicture()">
-    <ion-icon slot="start" name="camera"></ion-icon>
-    Take Picture
-  </ion-button>
-  
-  <ion-button color="secondary" expand="full" (click)="uploadPicture()">
-    <ion-icon slot="start" name="cloud-upload"></ion-icon>
-    Upload Picture
-  </ion-button>
+  <div [hidden]="!loading">
+      <ion-item>
+        <h3>Uploading Data Please Wait</h3>
+        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+      </ion-item>
+  </div>
 </ion-content>

@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { MySQLService } from '../service/my-sql.service';
 import { Listing } from '../interface/listing';
-import { CategoryService } from '../service/category.service';
+// import { CategoryService } from '../service/category.service';
 import { Router } from '@angular/router';
+import { Category } from '../interface/category';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   listings: Array<Listing> = [];
   category_id: string;
   cities: Array<any> = [];
@@ -20,15 +22,37 @@ export class HomePage implements OnInit {
     offset: 10,
     max: -1
   };
+  categories: Array<Category> = [];
+  backButtonSubscription: any;
 
   constructor(
-    private mysql: MySQLService, 
-    public cs: CategoryService,
+    private mysql: MySQLService,
     private route: Router,
+    private platform: Platform
     ) { }
 
   ngOnInit() {
-    this.mysql.select('city').subscribe((res: any) => this.cities = res);
+    this.isLoading = true;
+    this.mysql.select('city').subscribe((res: any) => {
+      this.isLoading = false;
+      this.cities = res
+    });
+    
+    this.isLoading = true;
+    this.mysql.select('categories').subscribe((res: Array<Category>) => {
+      this.isLoading = false;
+      this.categories = res;
+    });
+  }
+
+  ngAfterViewInit() {
+    this.backButtonSubscription = this.platform.backButton.subscribe(()=>{
+      navigator['app'].exitApp();
+    });
+  }
+
+  ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
   }
 
   async get(){
@@ -95,11 +119,5 @@ export class HomePage implements OnInit {
     }
     this.get();
   }
-
-  isNext() {
-
-  }
-
-
 
 }

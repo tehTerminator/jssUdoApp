@@ -13,25 +13,30 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>
+      <ion-label position="floating">
         Username
       </ion-label>
       <ion-input [(ngModel)]="username"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>
+      <ion-label position="floating">
         Password
       </ion-label>
       <ion-input [(ngModel)]="password" type="password"></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-item>
-    <ion-note [hidden]="message.length === 0" color="primary">
+  <ion-item [hidden]="message.length === 0" >
+    <ion-note color="primary">
       {{ message }}
     </ion-note>
   </ion-item>
-
-  <ion-button expand="block" [hidden]="isHidden" (click)="logIn()">Submit</ion-button>
+  
+  <div class="center-aligned">
+    <ion-button size="large" [hidden]="isHidden" (click)="logIn()">
+      <ion-icon slot="start" name="log-in"></ion-icon>
+      Submit
+    </ion-button>
+  </div>
 
 </ion-content>

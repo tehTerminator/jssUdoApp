@@ -30,9 +30,8 @@ export class CategoryFormPage{
       this.lastInserted.title = this.categoryName;
       this.categoryName = '';
       this.isLoading = false;
+      this.cs.retrieveFromServer();
     });
-
-    this.cs.retrieveFromServer();
   }
 
   hasInsertedRecently(): boolean{

@@ -23,7 +23,7 @@
   <ion-item>
     <ion-label position="floating">Category</ion-label>
     <ion-select (ionChange)="getCount()" [(ngModel)]="category_id">
-      <ion-select-option *ngFor="let category of cs.getAll()" [value]="category.id">{{ category.title }}
+      <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.title }}
       </ion-select-option>
     </ion-select>
   </ion-item>

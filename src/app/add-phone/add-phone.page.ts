@@ -32,8 +32,8 @@ export class AddPhonePage implements OnInit {
     });
   }
 
-  getListing(listing_id: number): void {
-    this.mysql.select('listings', {
+  async getListing(listing_id: number) {
+    await this.mysql.select('listings', {
       andWhere: {
         id: listing_id
       }
@@ -42,8 +42,8 @@ export class AddPhonePage implements OnInit {
     })
   }
 
-  addPhone(): void {
-    this.mysql.insert("phone", {
+  async addPhone(){
+    await this.mysql.insert("phone", {
       userData: {
         listing_id: this.listing.id,
         contact: this.phoneNumber
@@ -54,23 +54,22 @@ export class AddPhonePage implements OnInit {
     });
   }
 
-  showPhone(): void {
+  async showPhone(){
     this.savedPhones = [];
-    this.mysql.select('phone', {
+    await this.mysql.select('phone', {
       andWhere: {
         listing_id: this.listing.id
       }
     }).subscribe((res: any) => {
-      console.log(res);
       Array.from(res).forEach((item: any) => {
         this.savedPhones.push(item.contact);
       })
     });
   }
 
-  delete(phone: string): void {
+  async delete(phone: string){
 
-    this.mysql.delete('phone', {
+    await this.mysql.delete('phone', {
       andWhere: {
         contact: phone,
         listing_id: this.listing.id

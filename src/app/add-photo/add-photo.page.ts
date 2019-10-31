@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { File } from '@ionic-native/file';
+import { HttpClient } from '@angular/common/http';
+// import { WebView } from '@ionic-native/ionic-webview/ngx';
+// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 @Component({
@@ -14,49 +14,59 @@ import { File } from '@ionic-native/file';
 export class AddPhotoPage implements OnInit {
   listing_id: number;
   imageData = "../assets/noImage.jpg";
-  result = '';
+  loading = false;
+  imageExist = false;
 
   constructor(
     private route: ActivatedRoute,
     private camera: Camera,
-    private webview: WebView,
-    private transfer: FileTransfer,
-    private file: File
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe((res: any) => {
       this.listing_id = +res['listing_id'];
     });
+    this.imageData = `http://maharajac.in/app/jss_images/${this.listing_id}.jpg`;
   }
 
   takePicture(): void {
     const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 75,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetHeight: 640,
+      targetWidth: 480
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.imageData = this.webview.convertFileSrc(imageData);
+      this.imageData = `data:image/jpeg;base64,${imageData}`;
+      this.imageExist = true;
     });
   }
 
   uploadPicture(): void {
-    let options: FileUploadOptions = {
-      fileKey: 'file',
+    this.loading = true;
+    const url = 'http://maharajac.in/app/jss_images/upload.php';
+    const request = {
+      data: this.imageData,
       fileName: `${this.listing_id}.jpg`,
-    }
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    fileTransfer.upload(this.imageData, 'http://maharajac.in/app/jss_images/upload.php', options)
-      .then((data) => {
-        this.result = JSON.stringify(data);
-      }, (err) => {
-        // error
-        this.result = JSON.stringify(err);
-      })
+    };
+    this.http.post(url, request)
+    .subscribe((res: any)=>{
+      if( +res.status === 200 ){
+        this.loading = false;
+        this.router.navigate(['/view-listing', this.listing_id]);
+      } else {
+        alert('Unable to Upload Photo, Please Check Your Connection');
+        this.loading = false;
+      }
+    });
   }
 
-
+  loadDefault(): void {
+    this.imageData = "../assets/noImage.jpg";
+  }
 }
