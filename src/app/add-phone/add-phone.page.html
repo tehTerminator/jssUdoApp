@@ -28,7 +28,10 @@
     </ion-item>
   </ion-list>
 
-  <ion-button expand="block" (click)="addPhone()">Add Phone Number</ion-button>
+  <ion-button size="large" color="primary" expand="full" (click)="addPhone()">
+    <ion-icon slot="start" name="call"></ion-icon>
+    Add Phone Number
+  </ion-button>
 
   <ion-list [hidden]="savedPhones.length === 0">
     <ion-list-header>Saved Phones</ion-list-header>
@@ -40,7 +43,8 @@
     </ion-item>
   </ion-list>
 
-  <ion-button expand="full" [routerLink]="['/view-listing', listing.id]">
+  <ion-button size="large" color="secondary" expand="full" [routerLink]="['/view-listing', listing.id]">
+    <ion-icon slot="start" name="thumbs-up"></ion-icon>
     View Listing
   </ion-button>
 </ion-content>

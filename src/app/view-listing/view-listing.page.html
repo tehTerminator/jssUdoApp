@@ -32,7 +32,7 @@
       <ion-item *ngIf="savedPhones.length === 0">
         Sorry No Contact Information Present.
       </ion-item>
-      <ion-item *ngFor="let phone of savedPhones">
+      <ion-item *ngFor="let phone of savedPhones"  href="tel:{{phone}}">
         <ion-label>
           {{ phone }}
         </ion-label>

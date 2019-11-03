@@ -1,17 +1,15 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { MySQLService } from '../service/my-sql.service';
 import { Listing } from '../interface/listing';
-// import { CategoryService } from '../service/category.service';
 import { Router } from '@angular/router';
 import { Category } from '../interface/category';
-import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy, AfterViewInit {
+export class HomePage implements OnInit {
   listings: Array<Listing> = [];
   category_id: string;
   cities: Array<any> = [];
@@ -23,13 +21,11 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     max: -1
   };
   categories: Array<Category> = [];
-  backButtonSubscription: any;
 
   constructor(
     private mysql: MySQLService,
     private route: Router,
-    private platform: Platform
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -37,33 +33,25 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
       this.isLoading = false;
       this.cities = res
     });
-    
+
     this.isLoading = true;
-    this.mysql.select('categories').subscribe((res: Array<Category>) => {
-      this.isLoading = false;
-      this.categories = res;
-    });
+    this.mysql
+      .select('categories', { orderBy: 'title ASC' })
+      .subscribe((res: Array<Category>) => {
+        this.isLoading = false;
+        this.categories = res;
+      });
   }
 
-  ngAfterViewInit() {
-    this.backButtonSubscription = this.platform.backButton.subscribe(()=>{
-      navigator['app'].exitApp();
-    });
-  }
-
-  ngOnDestroy() {
-    this.backButtonSubscription.unsubscribe();
-  }
-
-  async get(){
+  async get() {
     this.isLoading = true;
     this.listings = [];
 
-    if( this.category_id === null || this.category_id === undefined ){
+    if (this.category_id === null || this.category_id === undefined) {
       this.isLoading = false;
       return;
-    } 
-    if( this.city_id === null || this.city_id === undefined ){
+    }
+    if (this.city_id === null || this.city_id === undefined) {
       this.isLoading = false;
       return;
     }
@@ -80,16 +68,16 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  goto(id: number): void{
+  goto(id: number): void {
     this.route.navigate(['/view-listing', id])
   }
 
   async getCount() {
-    if( this.category_id === null || this.category_id === undefined ){
+    if (this.category_id === null || this.category_id === undefined) {
       this.isLoading = false;
       return;
-    } 
-    if( this.city_id === null || this.city_id === undefined ){
+    }
+    if (this.city_id === null || this.city_id === undefined) {
       this.isLoading = false;
       return;
     }
@@ -110,11 +98,11 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   next() {
-    if( this.listings.length === 0 ){
+    if (this.listings.length === 0) {
       return;
     }
     this.limit.start += this.limit.offset;
-    if( this.limit.start > this.limit.max ){
+    if (this.limit.start > this.limit.max) {
       this.limit.start = 0;
     }
     this.get();
