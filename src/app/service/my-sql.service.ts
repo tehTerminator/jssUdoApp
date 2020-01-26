@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class MySQLService {
-  private serverLink = 'http://maharajac.in/app/api/dirApp/theSql.php';
+  private serverLink = 'https://jssaudo.in/api/theSql.php';
 
   // Uncomment For Production Build
   // private serverLink = 'http://192.168.0.10/api/sql.php';

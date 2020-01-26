@@ -41,6 +41,9 @@ export class HomePage implements OnInit {
         this.isLoading = false;
         this.categories = res;
       });
+
+    this.mysql.select('listings', {orderBy: 'weight DESC', limit: '10'})
+    .subscribe((res: any) => this.listings = res);
   }
 
   async get() {
@@ -61,6 +64,7 @@ export class HomePage implements OnInit {
         category_id: this.category_id,
         city_id: this.city_id
       },
+      orderBy: 'weight DESC',
       limit: `${this.limit.start}, ${this.limit.offset}`
     }).subscribe((res: any) => {
       this.isLoading = false;

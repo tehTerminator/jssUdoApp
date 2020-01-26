@@ -23,12 +23,12 @@
 
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">Phone Number</ion-label>
-      <ion-input type="phone" [(ngModel)]="phoneNumber"></ion-input>
+      <ion-label position="stacked">Enter Phone Number</ion-label>
+      <ion-input type="tel" [(ngModel)]="phoneNumber"></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-button size="large" color="primary" expand="full" (click)="addPhone()">
+  <ion-button [hidden]="phoneNumber.length < 10" size="large" color="primary" expand="full" (click)="addPhone()">
     <ion-icon slot="start" name="call"></ion-icon>
     Add Phone Number
   </ion-button>

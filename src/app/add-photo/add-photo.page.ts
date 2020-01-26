@@ -28,7 +28,7 @@ export class AddPhotoPage implements OnInit {
     this.route.params.subscribe((res: any) => {
       this.listing_id = +res['listing_id'];
     });
-    this.imageData = `http://maharajac.in/app/jss_images/${this.listing_id}.jpg`;
+    this.imageData = `https://jssaudo.in/assets/${this.listing_id}.jpg`;
   }
 
   takePicture(): void {
@@ -49,7 +49,7 @@ export class AddPhotoPage implements OnInit {
 
   uploadPicture(): void {
     this.loading = true;
-    const url = 'http://maharajac.in/app/jss_images/upload.php';
+    const url = 'https://jssaudo.in/assets/upload.php';
     const request = {
       data: this.imageData,
       fileName: `${this.listing_id}.jpg`,

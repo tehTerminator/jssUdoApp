@@ -9,4 +9,5 @@ export interface Listing {
     weight?: number;
     image?: string;
     city?: string;
+    view_count?: number;
 }

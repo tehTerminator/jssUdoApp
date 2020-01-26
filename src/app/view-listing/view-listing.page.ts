@@ -35,7 +35,7 @@ export class ViewListingPage implements OnInit {
       this.getListing();
     });
     this.authLevel = this.userService.getAuthLevel();
-    this.url = `http://maharajac.in/app/jss_images/${this.listing.id}.jpg`;
+    this.url = `https://jssaudo.in/assets/${this.listing.id}.jpg`;
   }
 
   editListing() {
@@ -54,7 +54,20 @@ export class ViewListingPage implements OnInit {
     }).subscribe((res: any) => {
       this.listing = res[0];
       this.getPhone();
-    })
+      this.updateViewCount();
+    });
+  }
+
+  updateViewCount(){
+    let viewCount = +this.listing.view_count + 1; //Update View Count
+    this.mysql.update('listings', {
+      userData: {
+        view_count: viewCount 
+      },
+      andWhere: {
+        id: this.listing.id
+      }
+    });
   }
 
   getPhone(): void {

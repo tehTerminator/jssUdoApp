@@ -43,15 +43,21 @@ export class AddPhonePage implements OnInit {
   }
 
   async addPhone(){
-    await this.mysql.insert("phone", {
-      userData: {
-        listing_id: this.listing.id,
-        contact: this.phoneNumber
-      }
-    }).subscribe(() => {
-      this.showPhone();
-      this.phoneNumber = '';
-    });
+
+    if( /^\d+$/.test(this.phoneNumber) ){
+      await this.mysql.insert("phone", {
+        userData: {
+          listing_id: this.listing.id,
+          contact: this.phoneNumber
+        }
+      }).subscribe(() => {
+        this.showPhone();
+        this.phoneNumber = '';
+      });
+    } else {
+      return;
+    }
+
   }
 
   async showPhone(){

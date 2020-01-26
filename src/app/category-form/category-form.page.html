@@ -11,6 +11,10 @@
 
 <ion-content>
   <ion-list>
+    <ion-item [hidden]="isLoading || categoryId === null">
+      <ion-label position="stacked">Category Id</ion-label>
+      <ion-input type="number" readonly="readonly" [(ngModel)]="categoryId"></ion-input>
+    </ion-item>
     <ion-item [hidden]="isLoading">
       <ion-label position="stacked">Category Name</ion-label>
       <ion-input type="text" [(ngModel)]="categoryName"></ion-input>
@@ -25,7 +29,7 @@
   </ion-list>
 
   <ion-button expand="block" (click)="save()" [hidden]="categoryName.length < 3 || isLoading">
-    Save
+    {{ buttonTitle }}
   </ion-button>
 
   

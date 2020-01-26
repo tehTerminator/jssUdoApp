@@ -13,7 +13,7 @@
 
   <ion-item>
     <ion-label position="floating">
-      City
+      Select City
     </ion-label>
     <ion-select [(ngModel)]="city_id" (ionChange)="getCount()">
       <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.title }}</ion-select-option>
@@ -21,12 +21,14 @@
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Category</ion-label>
+    <ion-label position="floating">Select Category</ion-label>
     <ion-select (ionChange)="getCount()" [(ngModel)]="category_id">
       <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.title }}
       </ion-select-option>
     </ion-select>
   </ion-item>
+
+  <hr>
 
   <ion-list>
     <ion-item [hidden]="!isLoading">
