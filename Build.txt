@@ -1,0 +1,3 @@
+.\jarsigner.exe -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore app-release-unsigned.apk my_key
+
+zipalign -v 4 app.apk JSS.apk
