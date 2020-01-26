@@ -41,18 +41,20 @@
     </ion-list>
   </ion-card>
 
-  <ion-button color="primary" [hidden]="authLevel <= 1" (click)="editListing()">
-    <ion-icon slot="start" name="create"></ion-icon>
-    Edit
-  </ion-button>
-  <ion-button color="secondary" [hidden]="authLevel <= 1" [routerLink]="['/add-photo', listing.id]">
-    <ion-icon slot="start" name="camera"></ion-icon>
-    Add Photo
-  </ion-button>
-  <ion-button color="danger" [hidden]="authLevel <= 1" (click)="deleteListing()">
-    <ion-icon slot="start" name="trash"></ion-icon>
-    Delete
-  </ion-button>
+  <div class="center-aligned">
+    <ion-button color="primary" [hidden]="authLevel <= 1" (click)="editListing()">
+      <ion-icon slot="start" name="create"></ion-icon>
+      Edit
+    </ion-button>
+    <ion-button color="secondary" [hidden]="authLevel <= 1" [routerLink]="['/add-photo', listing.id]">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Add Photo
+    </ion-button>
+    <ion-button color="danger" [hidden]="authLevel <= 1" (click)="deleteListing()">
+      <ion-icon slot="start" name="trash"></ion-icon>
+      Delete
+    </ion-button>
+  </div>
 </ion-content>
 
 <!-- href="/add-photo/{{ listing.id }}" -->

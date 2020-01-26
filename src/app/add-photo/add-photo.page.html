@@ -11,13 +11,18 @@
 <ion-content>
 
   <div [hidden]="loading">
-    <ion-img [src]="imageData" (error)="loadDefault()"></ion-img>
-    <ion-button color="primary" expand="full" (click)="takePicture()">
+    <img [src]="imageData" (error)="loadDefault()">
+    <ion-button color="primary" expand="full" size="large" (click)="takePicture()">
       <ion-icon slot="start" name="camera"></ion-icon>
-      Take Picture
+      Take A Picture
+    </ion-button>
+
+    <ion-button color="tertiary" expand="full" size="large" (click)="chooseFromGallery()">
+      <ion-icon slot="start" name="image"></ion-icon>
+      Choose From Gallery
     </ion-button>
     
-    <ion-button [hidden]="!imageExist" color="secondary" expand="full" (click)="uploadPicture()">
+    <ion-button [hidden]="!imageExist" color="secondary" size="large" expand="full" (click)="uploadPicture()">
       <ion-icon slot="start" name="cloud-upload"></ion-icon>
       Upload Picture
     </ion-button>

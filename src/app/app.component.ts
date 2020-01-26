@@ -43,6 +43,12 @@ export class AppComponent {
       level: 5
     },
     {
+      title: 'Cities',
+      url: '/city-form',
+      icon: 'map',
+      level: 9
+    },
+    {
       title: 'Login',
       url: '/login',
       icon: 'contacts',

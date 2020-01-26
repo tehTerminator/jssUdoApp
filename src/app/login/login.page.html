@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title color="primary">
       Login
     </ion-title>
   </ion-toolbar>
@@ -11,6 +11,11 @@
 
 
 <ion-content>
+  <ion-list>
+    <ion-item>
+      <p>Please Enter Username and Password to Access Admin Account</p>
+    </ion-item>
+  </ion-list>
   <ion-list>
     <ion-item>
       <ion-label position="floating">
@@ -31,12 +36,10 @@
       {{ message }}
     </ion-note>
   </ion-item>
+
+  <ion-button expand="block" size="large" [hidden]="isHidden" (click)="logIn()">
+      Log In
+  </ion-button>
   
-  <div class="center-aligned">
-  <ion-button expand="full" size="large" [hidden]="isHidden" (click)="logIn()">
-      <ion-icon slot="start" name="log-in"></ion-icon>
-      Submit
-    </ion-button>
-  </div>
 
 </ion-content>

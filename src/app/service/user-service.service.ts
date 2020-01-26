@@ -9,16 +9,23 @@ import { Router } from '@angular/router';
 export class UserServiceService {
   private user: User;
 
-  constructor(private mysql: MySQLService, private router: Router ) { }
+  constructor(private mysql: MySQLService, private router: Router ) {
+    // For Testing Only
+    // Please Remove this in Production
+    this.user = {
+      name: 'Prateek',
+      authLevel: 10
+    };
+  }
 
-  async login(username: string, password: string){
+  async login(username: string, thePassword: string){
     this.mysql.select('users', {
       andWhere: {
         name: username,
-        'password': password
+        password: thePassword
       }
     }).subscribe((res: any) => {
-      if( res.length >= 1 ){  
+      if ( res.length >= 1 ){
         this.user = {
           name: res[0].name,
           authLevel: +res[0].authLevel,
@@ -32,7 +39,7 @@ export class UserServiceService {
   }
 
   getAuthLevel(): number {
-    if( this.user === undefined || this.user === null ){
+    if ( this.user === undefined || this.user === null ) {
       return 0;
     } else {
       return +this.user.authLevel;

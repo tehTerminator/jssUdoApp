@@ -26,7 +26,7 @@ export class AddPhotoPage implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((res: any) => {
-      this.listing_id = +res['listing_id'];
+      this.listing_id = +res.listing_id;
     });
     this.imageData = `https://jssaudo.in/assets/${this.listing_id}.jpg`;
   }
@@ -34,6 +34,23 @@ export class AddPhotoPage implements OnInit {
   takePicture(): void {
     const options: CameraOptions = {
       quality: 75,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      targetHeight: 640,
+      targetWidth: 480
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.imageData = `data:image/jpeg;base64,${imageData}`;
+      this.imageExist = true;
+    });
+  }
+
+  chooseFromGallery(): void {
+    const options: CameraOptions = {
+      quality: 75,
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -55,8 +72,8 @@ export class AddPhotoPage implements OnInit {
       fileName: `${this.listing_id}.jpg`,
     };
     this.http.post(url, request)
-    .subscribe((res: any)=>{
-      if( +res.status === 200 ){
+    .subscribe((res: any) => {
+      if ( +res.status === 200 ) {
         this.loading = false;
         this.router.navigate(['/view-listing', this.listing_id]);
       } else {
@@ -67,6 +84,6 @@ export class AddPhotoPage implements OnInit {
   }
 
   loadDefault(): void {
-    this.imageData = "../assets/noImage.jpg";
+    this.imageData = '../assets/noImage.jpg';
   }
 }

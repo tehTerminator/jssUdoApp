@@ -11,9 +11,9 @@ import { Category } from '../interface/category';
 })
 export class HomePage implements OnInit {
   listings: Array<Listing> = [];
-  category_id: string;
+  categoryId: string;
   cities: Array<any> = [];
-  city_id: string;
+  cityId: string;
   isLoading = false;
   limit = {
     start: 0,
@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
     this.isLoading = true;
     this.mysql.select('city').subscribe((res: any) => {
       this.isLoading = false;
-      this.cities = res
+      this.cities = res;
     });
 
     this.isLoading = true;
@@ -50,19 +50,19 @@ export class HomePage implements OnInit {
     this.isLoading = true;
     this.listings = [];
 
-    if (this.category_id === null || this.category_id === undefined) {
+    if (this.categoryId === null || this.categoryId === undefined) {
       this.isLoading = false;
       return;
     }
-    if (this.city_id === null || this.city_id === undefined) {
+    if (this.cityId === null || this.cityId === undefined) {
       this.isLoading = false;
       return;
     }
 
     this.mysql.select('listings', {
       andWhere: {
-        category_id: this.category_id,
-        city_id: this.city_id
+        category_id: this.categoryId,
+        city_id: this.cityId
       },
       orderBy: 'weight DESC',
       limit: `${this.limit.start}, ${this.limit.offset}`
@@ -73,15 +73,15 @@ export class HomePage implements OnInit {
   }
 
   goto(id: number): void {
-    this.route.navigate(['/view-listing', id])
+    this.route.navigate(['/view-listing', id]);
   }
 
   async getCount() {
-    if (this.category_id === null || this.category_id === undefined) {
+    if (this.categoryId === null || this.categoryId === undefined) {
       this.isLoading = false;
       return;
     }
-    if (this.city_id === null || this.city_id === undefined) {
+    if (this.cityId === null || this.cityId === undefined) {
       this.isLoading = false;
       return;
     }
@@ -91,8 +91,8 @@ export class HomePage implements OnInit {
     this.mysql.select('listings', {
       columns: ['COUNT(id) as max'],
       andWhere: {
-        category_id: this.category_id,
-        city_id: this.city_id
+        category_id: this.categoryId,
+        city_id: this.cityId
       }
     }).subscribe((res: any) => {
       this.isLoading = false;
